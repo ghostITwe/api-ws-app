@@ -5,10 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use DateTime;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
+use Illuminate\{Http\JsonResponse, Http\Request, Support\Facades\Auth, Support\Facades\Hash};
 use Symfony\Component\HttpFoundation\Response;
 
 class AuthController extends Controller
