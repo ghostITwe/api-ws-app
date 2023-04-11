@@ -10,11 +10,11 @@ use Symfony\Component\HttpFoundation\Response;
 
 class AuthController extends Controller
 {
-    public function login(Request $request): JsonResponse|string
+    public function login(Request $request): array|string
     {
         try {
             $credentials = $request->validate([
-                'login' => 'required|string',
+                'email' => 'required|string',
                 'password' => 'required|string'
             ]);
 
@@ -23,9 +23,9 @@ class AuthController extends Controller
                 $token = $user->createToken('login_token', ['*'], (new DateTime())->modify('+10 day'))
                     ->plainTextToken;
 
-                return response()->json([
+                return [
                     'token' => $token
-                ], Response::HTTP_OK);
+                ];
             }
 
             return response()->json([
@@ -36,7 +36,7 @@ class AuthController extends Controller
         }
     }
 
-    public function register(Request $request): JsonResponse|string
+    public function register(Request $request): array|string
     {
         try {
             $data = $request->validate([
@@ -64,18 +64,18 @@ class AuthController extends Controller
             $token = $user->createToken('registration_token', ['*'], (new DateTime())->modify('+10 day'))
                 ->plainTextToken;
 
-            return response()->json([
+            return [
                 'token' => $token
-            ], Response::HTTP_OK);
+            ];
         } catch (\Exception $e) {
             return $e->getMessage();
         }
     }
 
-    public function logout(Request $request): JsonResponse
+    public function logout(Request $request): array
     {
         $request->user()->currentAccessToken()->delete();
 
-        return response()->json([], Response::HTTP_NO_CONTENT);
+        return [];
     }
 }
